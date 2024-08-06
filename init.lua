@@ -113,6 +113,11 @@ vim.opt.showmode = false
 -- Enable Nerd Font
 vim.g.have_nerd_font = true
 
+-- Tab settings
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -120,6 +125,16 @@ vim.g.have_nerd_font = true
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
+
+-- Sync with windows clipboard when using WSL
+if vim.fn.has 'wsl' == 1 then
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('Yank', { clear = true }),
+    callback = function()
+      vim.fn.system('clip.exe', vim.fn.getreg '"')
+    end,
+  })
+end
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -166,8 +181,8 @@ vim.api.nvim_set_keymap('n', 'H', 'gT', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'L', 'gt', { noremap = true, silent = true })
 
 -- Move lines in visual mode
-vim.api.nvim_set_keymap('v', 'J', "dpV']", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'K', "d-PV']", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('v', 'J', "dpV']", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('v', 'K', "d-PV']", { noremap = true, silent = true })
 
 -- Cursor quality of life changes
 vim.api.nvim_set_keymap('n', 'J', 'mzJ`z', { noremap = true, silent = true })
