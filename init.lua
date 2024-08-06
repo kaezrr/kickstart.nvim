@@ -102,13 +102,16 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
+
+-- Enable Nerd Font
+vim.g.have_nerd_font = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -155,7 +158,31 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 8
+
+-- Personal Remaps
+-- Go to previous or next tab
+vim.api.nvim_set_keymap('n', 'H', 'gT', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'L', 'gt', { noremap = true, silent = true })
+
+-- Move lines in visual mode
+vim.api.nvim_set_keymap('v', 'J', "dpV']", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', 'K', "d-PV']", { noremap = true, silent = true })
+
+-- Cursor quality of life changes
+vim.api.nvim_set_keymap('n', 'J', 'mzJ`z', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
+
+-- Cut without copying
+--vim.api.nvim_set_keymap('x', '<leader>p', '"_dP', { noremap = true, silent = true })
+
+-- Copy stuff into system clipboard instead of vim
+--vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<leader>Y', '"+Y', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<leader>y', '"+y', { noremap = true, silent = true })
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -176,10 +203,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -883,7 +910,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
